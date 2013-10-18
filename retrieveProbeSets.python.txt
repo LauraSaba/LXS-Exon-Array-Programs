@@ -1,0 +1,41 @@
+import string
+
+totalProbes = sum(1 for line in open("rma.fullPS.LXS.PhenoGen.txt"))-1
+fp = open("rma.fullPS.LXS.PhenoGen.txt")
+header = fp.readline()
+#header = string.split(header)
+
+nprobes = sum(1 for line in open("Gnb1Module.txt")) - 1
+
+module = open("Gnb1Module.txt")
+headerModule = module.readline()
+
+#Start Output File
+
+outputFile = "LXS.Gnb1Module.probeSets.txt"
+
+fout = open(outputFile, "wb")
+
+fout.write(header)
+
+
+j=1
+
+while j<nprobes+1:
+	target = string.split(module.readline())[1]
+	i=1
+	fp = open("rma.fullPS.LXS.PhenoGen.txt")
+	header = fp.readline()
+	while i<totalProbes+1:
+		i = i+1
+		trait = fp.readline()
+		probeID = string.split(trait)[0]
+		if target==probeID:
+			fout.write(trait)
+
+	j=j+1		
+
+
+
+fout.close()
+

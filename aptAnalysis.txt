@@ -1,0 +1,26 @@
+cd /data/Tabastore3/LauraS/LXS/Source
+export PATH=$PATH:/usr/local/apt-1.12.0-20091012-amd64-pc-linux/bin
+
+PGF=/data/Tabastore3/LauraS/Affymetrix/SNP.Masks/Exon.Array/Mouse/Results/MoEx-1_0-st-v1.r2.LXS.MASKED.pgf
+CLF=MoEx-1_0-st-v1.r2.clf
+BPG=MoEx-1_0-st-v1.r2.antigenomic.bgp 
+QCC=MoEx-1_0-st-v1.r2.qcc 
+
+##  RMA Normalization at the Core Transcript Cluster Level  ##
+MPS=/data/Tabastore3/LauraS/Affymetrix/SNP.Masks/Exon.Array/Mouse/Results/MoEx-1_0-st-v1.r2.dt1.mm10.core.LXS.MASKED.mps 
+
+apt-probeset-summarize -p $PGF -c $CLF -b $BPG --qc-probesets $QCC -m $MPS -a rma -a dabg -o "coreTrans.mm10" --cel-files exonArray.noOutliers.fileListing.21May12.txt
+
+##  RMA Normalization at the Full Transcript Cluster Level  ##
+MPS=/data/Tabastore3/LauraS/Affymetrix/SNP.Masks/Exon.Array/Mouse/Results/MoEx-1_0-st-v1.r2.dt1.mm10.full.LXS.MASKED.mps 
+
+apt-probeset-summarize -p $PGF -c $CLF -b $BPG --qc-probesets $QCC -m $MPS -a rma -a dabg -o "fullTrans.mm10" --cel-files exonArray.noOutliers.fileListing.21May12.txt
+
+##  RMA Normalization at the Full Probe Set Level  ##
+PS=/data/Tabastore3/LauraS/Affymetrix/SNP.Masks/Exon.Array/Mouse/Results/MoEx-1_0-st-v1.r2.dt1.mm10.full.LXS.MASKED.ps 
+
+apt-probeset-summarize -p $PGF -c $CLF -b $BPG --qc-probesets $QCC -s $PS -a rma -a dabg -o "fullPS.mm10" --cel-files exonArray.noOutliers.fileListing.21May12.txt
+
+
+##  RMA Normalization of All Transcript Clusters  ##
+apt-probeset-summarize -p MoEx-1_0-st-v1.r2.masked.pgf -c MoEx-1_0-st-v1.r2.clf -b MoEx-1_0-st-v1.r2.antigenomic.bgp --qc-probesets MoEx-1_0-st-v1.r2.qcc -m MoEx-1_0-st-v1.r2.dt1.mm9.all.MASKED.mps -a rma -a dabg -o "allTrans" --cel-files exonArray.noOutliers.fileListing.21May12.txt
